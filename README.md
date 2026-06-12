@@ -31,4 +31,11 @@ pertama langsung ngoding hal nyata, sambil membangun fondasi menuju sertifikasi
 > 8 sesi inti. Bisa ditambah sesi review/proyek akhir sebelum ujian asli.
 
 ## Materi
-- [Sesi 1 — Halo Python](sesi/sesi-01-halo-python.md)
+- [Sesi 1 — Halo Python: program pertamamu](sesi/sesi-01-halo-python.md)
+- [Sesi 2 — Operator & angka: bikin kalkulator](sesi/sesi-02-operator-kalkulator.md)
+- [Sesi 3 — Pengambilan keputusan: `if`/`elif`/`else`](sesi/sesi-03-if-else.md)
+- [Sesi 4 — Perulangan: `for` & `while`](sesi/sesi-04-perulangan.md)
+- [Sesi 5 — Koleksi data: `list` & `tuple`](sesi/sesi-05-list-tuple.md)
+- [Sesi 6 — `dictionary` & mini-proyek data](sesi/sesi-06-dictionary.md)
+- [Sesi 7 — Fungsi (`def`): merapikan kode](sesi/sesi-07-fungsi.md)
+- [Sesi 8 — Error & exceptions + simulasi ujian PCEP](sesi/sesi-08-errors-ujian.md)
