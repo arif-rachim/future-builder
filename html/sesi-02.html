@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesi 2 — Operator & Kalkulator · Future Builder</title>
+<style>
+:root { --accent:#2563eb; --bg:#f7f8fb; --card:#fff; --text:#1f2430; --muted:#5b6472; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  font-size:18px; line-height:1.7; color:var(--text); background:var(--bg); }
+.topnav { position:sticky; top:0; z-index:10; background:#0f172a; color:#fff;
+  display:flex; gap:.5rem; align-items:center; padding:.6rem 1rem; flex-wrap:wrap; }
+.topnav a { color:#cbd5e1; text-decoration:none; font-size:.9rem; padding:.3rem .6rem;
+  border-radius:6px; }
+.topnav a:hover { background:#1e293b; color:#fff; }
+.topnav .home { font-weight:700; color:#fff; }
+.topnav .spacer { flex:1; }
+.wrap { max-width:860px; margin:0 auto; padding:2rem 1.2rem 5rem; }
+.card { background:var(--card); border:1px solid #e6e8ee; border-radius:14px;
+  padding:1.6rem 1.8rem; box-shadow:0 1px 3px rgba(16,24,40,.04); }
+h1 { font-size:2rem; line-height:1.25; margin-top:0; }
+h2 { font-size:1.45rem; margin-top:2.2rem; padding-top:1rem; border-top:1px solid #eceef3; }
+h3 { font-size:1.15rem; color:#111827; }
+a { color:var(--accent); }
+blockquote { margin:1rem 0; padding:.6rem 1rem; background:#eef2ff; border-left:4px solid var(--accent);
+  border-radius:0 8px 8px 0; color:#374151; }
+code { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:.92em;
+  background:#eef1f6; padding:.12em .4em; border-radius:5px; }
+pre { background:#1e293b; border-radius:10px; padding:1rem 1.1rem; overflow:auto; }
+pre code { background:none; color:#e2e8f0; padding:0; font-size:.9rem; line-height:1.55; }
+.codehilite { background:#1e293b; border-radius:10px; margin:1rem 0; }
+.codehilite pre { margin:0; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+th,td { border:1px solid #e3e6ee; padding:.5rem .7rem; text-align:left; }
+th { background:#f1f5f9; }
+details { background:#f8fafc; border:1px solid #e3e6ee; border-radius:10px;
+  padding:.4rem 1rem; margin:1rem 0; }
+summary { cursor:pointer; font-weight:600; padding:.4rem 0; }
+input[type=checkbox] { transform:scale(1.25); margin-right:.5rem; }
+ul li { margin:.2rem 0; }
+.prevnext { display:flex; justify-content:space-between; margin-top:2.5rem; gap:1rem; }
+.prevnext a { background:var(--accent); color:#fff; text-decoration:none; padding:.6rem 1rem;
+  border-radius:8px; font-size:.9rem; }
+.prevnext a.disabled { background:#cbd5e1; pointer-events:none; }
+@media print { .topnav,.prevnext { display:none; } .card { box-shadow:none; border:none; } }
+
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */</style>
+</head>
+<body>
+<nav class="topnav">
+  <a class="home" href="index.html">🏠 Future Builder</a>
+  <span class="spacer"></span>
+  <a href="sesi-01.html">Sesi 1</a>
+  <a href="sesi-02.html" style="color:#fff;background:#1e293b">Sesi 2</a>
+  <a href="sesi-03.html">Sesi 3</a>
+  <a href="sesi-04.html">Sesi 4</a>
+  <a href="sesi-05.html">Sesi 5</a>
+  <a href="sesi-06.html">Sesi 6</a>
+  <a href="sesi-07.html">Sesi 7</a>
+  <a href="sesi-08.html">Sesi 8</a>
+  <a href="bank-soal.html">Bank Soal PCEP</a>
+  <a href="checklist.html">Checklist Progres</a>
+</nav>
+<div class="wrap">
+  <article class="card">
+<h1>Sesi 2 — Operator &amp; Angka: Bikin Kalkulator</h1>
+<blockquote>
+<p><strong>Durasi:</strong> 75 menit · <strong>Tools:</strong> Google Colab · <strong>Peserta:</strong> Tazkia &amp; Ardy (pemula)<br />
+<strong>Target PCEP:</strong> Bagian 2 (operator, ekspresi, tipe data numerik, konversi tipe)</p>
+</blockquote>
+<h2>🎯 Tujuan sesi</h2>
+<p>Di akhir sesi ini, Tazkia &amp; Ardy akan:<br />
+1. Menggunakan operator aritmetika: <code>+ - * / // % **</code>.<br />
+2. Memahami beda <code>int</code> dan <code>float</code>, serta konversi <code>int()</code> / <code>float()</code> / <code>str()</code>.<br />
+3. Memahami <strong>urutan operasi</strong> (operator precedence).<br />
+4. Membuat <strong>kalkulator sederhana</strong> yang menerima dua angka dari pengguna.</p>
+<hr />
+<h2>⏱️ Rundown 75 menit</h2>
+<table>
+<thead>
+<tr>
+<th>Waktu</th>
+<th>Bagian</th>
+<th>Aktivitas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 mnt</td>
+<td>Pemanasan &amp; review</td>
+<td>Cek PR sesi 1, ingat <code>input</code> + <code>int()</code></td>
+</tr>
+<tr>
+<td>20 mnt</td>
+<td>Konsep + live coding</td>
+<td>Operator &amp; tipe angka</td>
+</tr>
+<tr>
+<td>25 mnt</td>
+<td>Latihan terbimbing</td>
+<td>Hitung-hitungan</td>
+</tr>
+<tr>
+<td>15 mnt</td>
+<td>Tantangan</td>
+<td>Kalkulator dua angka</td>
+</tr>
+<tr>
+<td>5 mnt</td>
+<td>Wrap-up &amp; PR</td>
+<td>Rangkuman, kosakata, tugas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>1) Pemanasan &amp; Review (10 menit)</h2>
+<p>Minta masing-masing menjalankan ulang "bot perkenalan" dari PR. Tanyakan: "Kenapa kemarin<br />
+<code>umur + 1</code> sempat error?" → ingatkan <code>input()</code> menghasilkan <strong>string</strong>, perlu <code>int()</code>.</p>
+<blockquote>
+<p>💡 Pemantik: "Komputer pertama diciptakan untuk satu hal: <strong>menghitung</strong>. Hari ini kita<br />
+bikin program penghitung kita sendiri."</p>
+</blockquote>
+<hr />
+<h2>2) Konsep + Live Coding (20 menit)</h2>
+<h3>a. Operator aritmetika</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>    <span class="c1"># 10  penjumlahan</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>    <span class="c1"># 4   pengurangan</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>    <span class="c1"># 21  perkalian</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>    <span class="c1"># 2.333...  pembagian (hasil selalu float)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)</span>   <span class="c1"># 2   pembagian bulat (floor division)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span>    <span class="c1"># 1   sisa bagi (modulo)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>   <span class="c1"># 343 pangkat (7 pangkat 3)</span>
+</code></pre></div>
+
+<blockquote>
+<p>🔑 Bedakan <code>/</code> (hasil pecahan/<code>float</code>) vs <code>//</code> (dibulatkan ke bawah). <code>%</code> (modulo)<br />
+sering keluar di PCEP — gunanya cari sisa bagi (mis. cek ganjil/genap).</p>
+</blockquote>
+<h3>b. <code>int</code> vs <code>float</code></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>        <span class="c1"># integer (angka bulat)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">3.5</span>       <span class="c1"># float (angka desimal)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># 13.5  -&gt; campur int &amp; float jadi float</span>
+</code></pre></div>
+
+<h3>c. Konversi tipe (type casting)</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">3.9</span><span class="p">))</span>      <span class="c1"># 3   (memotong, bukan membulatkan)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>      <span class="c1"># 5.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>      <span class="c1"># &quot;100&quot;  -&gt; jadi teks</span>
+</code></pre></div>
+
+<h3>d. Urutan operasi (precedence)</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>     <span class="c1"># 14, bukan 20 (kali dulu)</span>
+<span class="nb">print</span><span class="p">((</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>   <span class="c1"># 20, kurung dieksekusi dulu</span>
+</code></pre></div>
+
+<p>Urutan: <code>**</code> → <code>* / // %</code> → <code>+ -</code>. Pakai kurung kalau ragu.</p>
+<hr />
+<h2>3) Latihan Terbimbing (25 menit)</h2>
+<p><strong>Latihan 1.</strong> Hitung dan tampilkan: luas persegi panjang dengan panjang 12 dan lebar 5.</p>
+<p><strong>Latihan 2.</strong> Tanyakan sebuah angka, lalu tampilkan <strong>kuadrat</strong> dan <strong>akar pangkat</strong> -nya.</p>
+<blockquote>
+<p>Petunjuk: akar = pangkat <code>** 0.5</code>.</p>
+</blockquote>
+<p><strong>Latihan 3.</strong> Tanyakan jumlah menit, lalu ubah jadi format <strong>jam &amp; menit</strong>.</p>
+<blockquote>
+<p>Petunjuk: gunakan <code>//</code> dan <code>%</code> dengan 60.</p>
+</blockquote>
+<hr />
+<h2>4) Tantangan: Kalkulator Dua Angka (15 menit)</h2>
+<p>Buat program yang:<br />
+1. Menanyakan <strong>angka pertama</strong> dan <strong>angka kedua</strong>.<br />
+2. Menampilkan hasil <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, dan sisa bagi <code>%</code>.</p>
+<p>Tantangan bonus: tampilkan juga <strong>rata-rata</strong> kedua angka.</p>
+<hr />
+<h2>5) Wrap-up (5 menit)</h2>
+<h3>Rangkuman</h3>
+<ul>
+<li>Operator: <code>+ - * / // % **</code>.</li>
+<li><code>/</code> selalu float; <code>//</code> membulatkan ke bawah; <code>%</code> sisa bagi.</li>
+<li>Konversi: <code>int()</code>, <code>float()</code>, <code>str()</code>. Kurung mengatur urutan.</li>
+</ul>
+<h3>🔤 English corner</h3>
+<table>
+<thead>
+<tr>
+<th>Istilah</th>
+<th>Arti</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>operator</strong></td>
+<td>simbol operasi (mis. <code>+</code>)</td>
+</tr>
+<tr>
+<td><strong>float</strong></td>
+<td>angka desimal/pecahan</td>
+</tr>
+<tr>
+<td><strong>modulo</strong></td>
+<td>sisa hasil bagi (<code>%</code>)</td>
+</tr>
+<tr>
+<td><strong>expression</strong></td>
+<td>gabungan nilai &amp; operator yang menghasilkan nilai</td>
+</tr>
+<tr>
+<td><strong>type casting</strong></td>
+<td>mengubah tipe data</td>
+</tr>
+</tbody>
+</table>
+<h3>📌 PR</h3>
+<p>Buat program "konversi suhu": tanyakan suhu Celsius, tampilkan dalam Fahrenheit.</p>
+<blockquote>
+<p>Rumus: <code>F = C * 9/5 + 32</code>.</p>
+</blockquote>
+<hr />
+<h2>✅ Kunci jawaban (untuk pengajar)</h2>
+<details>
+<summary>Latihan 1</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">panjang</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">lebar</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Luas:&quot;</span><span class="p">,</span> <span class="n">panjang</span> <span class="o">*</span> <span class="n">lebar</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>Latihan 2</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">angka</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Masukkan sebuah angka: &quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kuadrat:&quot;</span><span class="p">,</span> <span class="n">angka</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akar:&quot;</span><span class="p">,</span> <span class="n">angka</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>Latihan 3</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">total</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Berapa menit? &quot;</span><span class="p">))</span>
+<span class="n">jam</span> <span class="o">=</span> <span class="n">total</span> <span class="o">//</span> <span class="mi">60</span>
+<span class="n">menit</span> <span class="o">=</span> <span class="n">total</span> <span class="o">%</span> <span class="mi">60</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jam</span><span class="p">,</span> <span class="s2">&quot;jam&quot;</span><span class="p">,</span> <span class="n">menit</span><span class="p">,</span> <span class="s2">&quot;menit&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>Tantangan: Kalkulator</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Angka pertama: &quot;</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Angka kedua: &quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah :&quot;</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selisih:&quot;</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kali   :&quot;</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bagi   :&quot;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sisa   :&quot;</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rata2  :&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1"># bonus</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>PR: Konversi suhu</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Suhu dalam Celsius: &quot;</span><span class="p">))</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;C =&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<hr />
+<h2>🧭 Catatan pengajar</h2>
+<ul>
+<li>Tunjukkan langsung di Colab beda <code>7/3</code> vs <code>7//3</code> — visual lebih nempel daripada dijelaskan.</li>
+<li>Kalau pembagian dengan 0, akan muncul <code>ZeroDivisionError</code> — ini bahan bagus untuk Sesi 8 (exceptions). Catat saja dulu.</li>
+<li><strong>Beda level:</strong> untuk Tazkia, singgung bahwa <code>float</code> punya keterbatasan presisi (<code>0.1 + 0.2</code>); untuk Ardy cukup sampai konsep dasar.</li>
+<li><strong>Sesi depan:</strong> pengambilan keputusan dengan <code>if</code> — program mulai bisa "berpikir".</li>
+</ul>
+  </article>
+  <div class="prevnext"><a href="sesi-01.html">← Sesi 1 — Halo Python</a><a href="sesi-03.html">Sesi 3 — Percabangan →</a></div>
+</div>
+</body>
+</html>

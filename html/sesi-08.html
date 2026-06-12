@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesi 8 — Error & Ujian · Future Builder</title>
+<style>
+:root { --accent:#2563eb; --bg:#f7f8fb; --card:#fff; --text:#1f2430; --muted:#5b6472; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  font-size:18px; line-height:1.7; color:var(--text); background:var(--bg); }
+.topnav { position:sticky; top:0; z-index:10; background:#0f172a; color:#fff;
+  display:flex; gap:.5rem; align-items:center; padding:.6rem 1rem; flex-wrap:wrap; }
+.topnav a { color:#cbd5e1; text-decoration:none; font-size:.9rem; padding:.3rem .6rem;
+  border-radius:6px; }
+.topnav a:hover { background:#1e293b; color:#fff; }
+.topnav .home { font-weight:700; color:#fff; }
+.topnav .spacer { flex:1; }
+.wrap { max-width:860px; margin:0 auto; padding:2rem 1.2rem 5rem; }
+.card { background:var(--card); border:1px solid #e6e8ee; border-radius:14px;
+  padding:1.6rem 1.8rem; box-shadow:0 1px 3px rgba(16,24,40,.04); }
+h1 { font-size:2rem; line-height:1.25; margin-top:0; }
+h2 { font-size:1.45rem; margin-top:2.2rem; padding-top:1rem; border-top:1px solid #eceef3; }
+h3 { font-size:1.15rem; color:#111827; }
+a { color:var(--accent); }
+blockquote { margin:1rem 0; padding:.6rem 1rem; background:#eef2ff; border-left:4px solid var(--accent);
+  border-radius:0 8px 8px 0; color:#374151; }
+code { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:.92em;
+  background:#eef1f6; padding:.12em .4em; border-radius:5px; }
+pre { background:#1e293b; border-radius:10px; padding:1rem 1.1rem; overflow:auto; }
+pre code { background:none; color:#e2e8f0; padding:0; font-size:.9rem; line-height:1.55; }
+.codehilite { background:#1e293b; border-radius:10px; margin:1rem 0; }
+.codehilite pre { margin:0; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+th,td { border:1px solid #e3e6ee; padding:.5rem .7rem; text-align:left; }
+th { background:#f1f5f9; }
+details { background:#f8fafc; border:1px solid #e3e6ee; border-radius:10px;
+  padding:.4rem 1rem; margin:1rem 0; }
+summary { cursor:pointer; font-weight:600; padding:.4rem 0; }
+input[type=checkbox] { transform:scale(1.25); margin-right:.5rem; }
+ul li { margin:.2rem 0; }
+.prevnext { display:flex; justify-content:space-between; margin-top:2.5rem; gap:1rem; }
+.prevnext a { background:var(--accent); color:#fff; text-decoration:none; padding:.6rem 1rem;
+  border-radius:8px; font-size:.9rem; }
+.prevnext a.disabled { background:#cbd5e1; pointer-events:none; }
+@media print { .topnav,.prevnext { display:none; } .card { box-shadow:none; border:none; } }
+
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */</style>
+</head>
+<body>
+<nav class="topnav">
+  <a class="home" href="index.html">🏠 Future Builder</a>
+  <span class="spacer"></span>
+  <a href="sesi-01.html">Sesi 1</a>
+  <a href="sesi-02.html">Sesi 2</a>
+  <a href="sesi-03.html">Sesi 3</a>
+  <a href="sesi-04.html">Sesi 4</a>
+  <a href="sesi-05.html">Sesi 5</a>
+  <a href="sesi-06.html">Sesi 6</a>
+  <a href="sesi-07.html">Sesi 7</a>
+  <a href="sesi-08.html" style="color:#fff;background:#1e293b">Sesi 8</a>
+  <a href="bank-soal.html">Bank Soal PCEP</a>
+  <a href="checklist.html">Checklist Progres</a>
+</nav>
+<div class="wrap">
+  <article class="card">
+<h1>Sesi 8 — Error &amp; Exceptions + Simulasi Ujian PCEP</h1>
+<blockquote>
+<p><strong>Durasi:</strong> 75 menit · <strong>Tools:</strong> Google Colab · <strong>Peserta:</strong> Tazkia &amp; Ardy (pemula)<br />
+<strong>Target PCEP:</strong> Bagian 5 (jenis error, <code>try</code>/<code>except</code>) + review semua bagian</p>
+</blockquote>
+<h2>🎯 Tujuan sesi</h2>
+<p>Di akhir sesi ini, Tazkia &amp; Ardy akan:<br />
+1. Mengenali jenis error umum (<code>SyntaxError</code>, <code>NameError</code>, <code>TypeError</code>, <code>ValueError</code>, <code>ZeroDivisionError</code>).<br />
+2. Menangani error dengan <code>try</code> / <code>except</code>.<br />
+3. Mereview seluruh materi sesi 1–7.<br />
+4. Mengerjakan <strong>simulasi soal PCEP</strong> dan tahu langkah menuju ujian asli.</p>
+<hr />
+<h2>⏱️ Rundown 75 menit</h2>
+<table>
+<thead>
+<tr>
+<th>Waktu</th>
+<th>Bagian</th>
+<th>Aktivitas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 mnt</td>
+<td>Pemanasan &amp; review</td>
+<td>Cek PR cek_password</td>
+</tr>
+<tr>
+<td>15 mnt</td>
+<td>Konsep + live coding</td>
+<td>Error &amp; <code>try</code>/<code>except</code></td>
+</tr>
+<tr>
+<td>20 mnt</td>
+<td>Latihan terbimbing</td>
+<td>Tangani error</td>
+</tr>
+<tr>
+<td>25 mnt</td>
+<td>Simulasi ujian PCEP</td>
+<td>Kerjakan soal pilihan ganda</td>
+</tr>
+<tr>
+<td>5 mnt</td>
+<td>Penutup &amp; peta lanjutan</td>
+<td>Apa setelah PCEP</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>1) Pemanasan &amp; Review (10 menit)</h2>
+<p>Bahas PR cek_password. Pemantik:</p>
+<blockquote>
+<p>"Program yang baik tidak langsung 'mati' ketika pengguna salah memasukkan data. Hari ini<br />
+kita belajar membuat program <strong>tahan banting</strong> — dan menutup persiapan PCEP kalian."</p>
+</blockquote>
+<hr />
+<h2>2) Konsep + Live Coding (15 menit)</h2>
+<h3>a. Jenis error umum</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>         <span class="c1"># ZeroDivisionError -&gt; bagi nol</span>
+<span class="nb">int</span><span class="p">(</span><span class="s2">&quot;halo&quot;</span><span class="p">)</span>           <span class="c1"># ValueError -&gt; teks bukan angka</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>              <span class="c1"># NameError -&gt; variabel belum dibuat</span>
+<span class="s2">&quot;5&quot;</span> <span class="o">+</span> <span class="mi">5</span>               <span class="c1"># TypeError -&gt; campur string &amp; int</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;halo)          # SyntaxError -&gt; tanda kutip belum ditutup</span>
+</code></pre></div>
+
+<blockquote>
+<p>🔑 PCEP banyak menanyakan <strong>"error apa yang muncul"</strong> dari potongan kode. Hafal ciri<br />
+tiap error: <code>ValueError</code> (nilai salah), <code>TypeError</code> (tipe salah), <code>NameError</code> (nama tak<br />
+dikenal), <code>ZeroDivisionError</code> (bagi nol), <code>SyntaxError</code> (penulisan salah).</p>
+</blockquote>
+<h3>b. <code>try</code> / <code>except</code> — menangkap error</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">angka</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Masukkan angka: &quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kuadratnya:&quot;</span><span class="p">,</span> <span class="n">angka</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Itu bukan angka yang valid!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Kode di <code>try</code> dicoba; jika error, lompat ke <code>except</code> alih-alih program mati.</p>
+<h3>c. <code>try</code> / <code>except</code> / <code>else</code> / <code>finally</code></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">hasil</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Pembagi: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak bisa bagi nol&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Harus angka&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hasil:&quot;</span><span class="p">,</span> <span class="n">hasil</span><span class="p">)</span>      <span class="c1"># jalan jika TIDAK ada error</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selesai.&quot;</span><span class="p">)</span>           <span class="c1"># SELALU jalan</span>
+</code></pre></div>
+
+<hr />
+<h2>3) Latihan Terbimbing (20 menit)</h2>
+<p><strong>Latihan 1.</strong> Bungkus program pembagian dua angka dengan <code>try/except</code> agar pembagian nol &amp; input non-angka tertangani rapi.</p>
+<p><strong>Latihan 2.</strong> Untuk tiap baris berikut, tebak <strong>error apa</strong> yang muncul (lalu cek di Colab):</p>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span><span class="p">)</span> <span class="nb">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">+</span> <span class="s2">&quot;5&quot;</span><span class="p">)</span>
+<span class="n">b</span><span class="p">)</span> <span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;3.5&quot;</span><span class="p">))</span>
+<span class="n">c</span><span class="p">)</span> <span class="nb">print</span><span class="p">(</span><span class="n">nilai_tidak_ada</span><span class="p">)</span>
+<span class="n">d</span><span class="p">)</span> <span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">%</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Latihan 3.</strong> Buat program yang terus meminta angka sampai pengguna memasukkan angka yang valid (pakai loop + try/except).</p>
+<hr />
+<h2>4) Simulasi Ujian PCEP (25 menit)</h2>
+<p>Kerjakan mandiri, lalu bahas bersama. (Kunci di bawah.)</p>
+<p><strong>1.</strong> Apa output dari <code>print(2 ** 3 ** 2)</code> ?<br />
+&nbsp;&nbsp;a) 64 &nbsp; b) 512 &nbsp; c) 12 &nbsp; d) Error</p>
+<p><strong>2.</strong> Apa hasil <code>print(7 // 2)</code> ?<br />
+&nbsp;&nbsp;a) 3.5 &nbsp; b) 3 &nbsp; c) 4 &nbsp; d) 1</p>
+<p><strong>3.</strong> Tipe data hasil <code>input()</code> selalu...<br />
+&nbsp;&nbsp;a) int &nbsp; b) float &nbsp; c) str &nbsp; d) bool</p>
+<p><strong>4.</strong> Apa output?</p>
+<div class="codehilite"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+</code></pre></div>
+
+<p>&nbsp;&nbsp;a) 2 &nbsp; b) 3 &nbsp; c) 4 &nbsp; d) Error</p>
+<p><strong>5.</strong> Error apa yang muncul: <code>int("abc")</code> ?<br />
+&nbsp;&nbsp;a) TypeError &nbsp; b) NameError &nbsp; c) ValueError &nbsp; d) SyntaxError</p>
+<p><strong>6.</strong> Apa output?</p>
+<div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>&nbsp;&nbsp;a) 1 2 3 &nbsp; b) 1 2 3 4 &nbsp; c) 0 1 2 3 &nbsp; d) 1 2 3 4 5</p>
+<p><strong>7.</strong> Manakah yang membuat dictionary?<br />
+&nbsp;&nbsp;a) <code>[1,2,3]</code> &nbsp; b) <code>(1,2,3)</code> &nbsp; c) <code>{1,2,3}</code> &nbsp; d) <code>{"a":1}</code></p>
+<p><strong>8.</strong> Apa output?</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+
+<p>&nbsp;&nbsp;a) 3 &nbsp; b) 5 &nbsp; c) Error &nbsp; d) 2</p>
+<hr />
+<h2>5) Penutup &amp; Peta Lanjutan (5 menit)</h2>
+<h3>Rangkuman seluruh kelas</h3>
+<p>Sesi 1–8 sudah menutup kelima bagian silabus <strong>PCEP</strong>:<br />
+fundamental → tipe data &amp; operator → kondisi → loop → koleksi (list/tuple/dict) →<br />
+fungsi → error handling.</p>
+<h3>🔤 English corner</h3>
+<table>
+<thead>
+<tr>
+<th>Istilah</th>
+<th>Arti</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>exception</strong></td>
+<td>error saat program berjalan</td>
+</tr>
+<tr>
+<td><strong>try / except</strong></td>
+<td>mencoba &amp; menangkap error</td>
+</tr>
+<tr>
+<td><strong>traceback</strong></td>
+<td>jejak pesan error</td>
+</tr>
+<tr>
+<td><strong>handle</strong></td>
+<td>menangani error</td>
+</tr>
+<tr>
+<td><strong>runtime</strong></td>
+<td>saat program berjalan</td>
+</tr>
+</tbody>
+</table>
+<h3>🎓 Langkah menuju ujian PCEP</h3>
+<ol>
+<li>Latihan soal resmi di <strong>edube.org</strong> (gratis) — kursus "Python Essentials 1".</li>
+<li>Banyak latihan soal pilihan ganda (mengenali output &amp; error).</li>
+<li>Ujian PCEP daring di <strong>OpenEDG</strong> — tidak ada batas waktu kedaluwarsa.</li>
+<li>Setelah PCEP → lanjut <strong>PCAP</strong> (intermediate) atau masuk ke materi teknis CS yang lebih dalam.</li>
+</ol>
+<hr />
+<h2>✅ Kunci jawaban (untuk pengajar)</h2>
+<details>
+<summary>Latihan 1</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Angka 1: &quot;</span><span class="p">))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Angka 2: &quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hasil:&quot;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak bisa membagi dengan nol&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Masukan harus berupa angka&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>Latihan 2 (jenis error)</summary>
+<ul>
+<li>a) <code>TypeError</code> — campur int dan str</li>
+<li>b) <code>ValueError</code> — <code>"3.5"</code> bukan integer (gunakan <code>float()</code> dulu)</li>
+<li>c) <code>NameError</code> — variabel belum didefinisikan</li>
+<li>d) <code>ZeroDivisionError</code> — modulo dengan nol</li>
+</ul>
+</details>
+<details>
+<summary>Latihan 3</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">angka</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Masukkan angka: &quot;</span><span class="p">))</span>
+        <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bukan angka, coba lagi.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Terima kasih, kamu memasukkan:&quot;</span><span class="p">,</span> <span class="n">angka</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>Kunci Simulasi Ujian PCEP</summary>
+<ol>
+<li><strong>b) 512</strong> — <code>**</code> dihitung dari kanan: <code>3 ** 2 = 9</code>, lalu <code>2 ** 9 = 512</code></li>
+<li><strong>b) 3</strong> — floor division</li>
+<li><strong>c) str</strong> — <code>input()</code> selalu menghasilkan string</li>
+<li><strong>b) 3</strong> — indeks <code>-2</code> = elemen kedua dari belakang</li>
+<li><strong>c) ValueError</strong></li>
+<li><strong>a) 1 2 3</strong> — <code>range(1,4)</code> → 1,2,3; <code>end=" "</code> agar sebaris</li>
+<li><strong>d) <code>{"a":1}</code></strong> — yang lain: list, tuple, set</li>
+<li><strong>b) 5</strong> — <code>b</code> memakai default 2, <code>3 + 2</code></li>
+</ol>
+</details>
+<hr />
+<h2>🧭 Catatan pengajar</h2>
+<ul>
+<li>Soal nomor 1 (<code>2 ** 3 ** 2</code>) hampir selalu menjebak — tekankan <code>**</code> bersifat <strong>right-associative</strong>.</li>
+<li>Biasakan murid <strong>membaca traceback dari baris paling bawah</strong> (di situ jenis &amp; pesan error).</li>
+<li><strong>Beda level:</strong> dorong Tazkia langsung mendaftar latihan resmi edube &amp; menargetkan ujian PCEP; Ardy boleh mengulang sesi 1–4 dulu sampai mantap sebelum lanjut.</li>
+<li><strong>Setelah kelas ini:</strong> inilah jembatan ke "pelajaran teknis CS mendetail" yang jadi tujuan awal — struktur data, algoritma, dan proyek nyata.</li>
+</ul>
+  </article>
+  <div class="prevnext"><a href="sesi-07.html">← Sesi 7 — Fungsi</a><a href="bank-soal.html">Bank Soal PCEP →</a></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesi 1 — Halo Python · Future Builder</title>
+<style>
+:root { --accent:#2563eb; --bg:#f7f8fb; --card:#fff; --text:#1f2430; --muted:#5b6472; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  font-size:18px; line-height:1.7; color:var(--text); background:var(--bg); }
+.topnav { position:sticky; top:0; z-index:10; background:#0f172a; color:#fff;
+  display:flex; gap:.5rem; align-items:center; padding:.6rem 1rem; flex-wrap:wrap; }
+.topnav a { color:#cbd5e1; text-decoration:none; font-size:.9rem; padding:.3rem .6rem;
+  border-radius:6px; }
+.topnav a:hover { background:#1e293b; color:#fff; }
+.topnav .home { font-weight:700; color:#fff; }
+.topnav .spacer { flex:1; }
+.wrap { max-width:860px; margin:0 auto; padding:2rem 1.2rem 5rem; }
+.card { background:var(--card); border:1px solid #e6e8ee; border-radius:14px;
+  padding:1.6rem 1.8rem; box-shadow:0 1px 3px rgba(16,24,40,.04); }
+h1 { font-size:2rem; line-height:1.25; margin-top:0; }
+h2 { font-size:1.45rem; margin-top:2.2rem; padding-top:1rem; border-top:1px solid #eceef3; }
+h3 { font-size:1.15rem; color:#111827; }
+a { color:var(--accent); }
+blockquote { margin:1rem 0; padding:.6rem 1rem; background:#eef2ff; border-left:4px solid var(--accent);
+  border-radius:0 8px 8px 0; color:#374151; }
+code { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:.92em;
+  background:#eef1f6; padding:.12em .4em; border-radius:5px; }
+pre { background:#1e293b; border-radius:10px; padding:1rem 1.1rem; overflow:auto; }
+pre code { background:none; color:#e2e8f0; padding:0; font-size:.9rem; line-height:1.55; }
+.codehilite { background:#1e293b; border-radius:10px; margin:1rem 0; }
+.codehilite pre { margin:0; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+th,td { border:1px solid #e3e6ee; padding:.5rem .7rem; text-align:left; }
+th { background:#f1f5f9; }
+details { background:#f8fafc; border:1px solid #e3e6ee; border-radius:10px;
+  padding:.4rem 1rem; margin:1rem 0; }
+summary { cursor:pointer; font-weight:600; padding:.4rem 0; }
+input[type=checkbox] { transform:scale(1.25); margin-right:.5rem; }
+ul li { margin:.2rem 0; }
+.prevnext { display:flex; justify-content:space-between; margin-top:2.5rem; gap:1rem; }
+.prevnext a { background:var(--accent); color:#fff; text-decoration:none; padding:.6rem 1rem;
+  border-radius:8px; font-size:.9rem; }
+.prevnext a.disabled { background:#cbd5e1; pointer-events:none; }
+@media print { .topnav,.prevnext { display:none; } .card { box-shadow:none; border:none; } }
+
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */</style>
+</head>
+<body>
+<nav class="topnav">
+  <a class="home" href="index.html">🏠 Future Builder</a>
+  <span class="spacer"></span>
+  <a href="sesi-01.html" style="color:#fff;background:#1e293b">Sesi 1</a>
+  <a href="sesi-02.html">Sesi 2</a>
+  <a href="sesi-03.html">Sesi 3</a>
+  <a href="sesi-04.html">Sesi 4</a>
+  <a href="sesi-05.html">Sesi 5</a>
+  <a href="sesi-06.html">Sesi 6</a>
+  <a href="sesi-07.html">Sesi 7</a>
+  <a href="sesi-08.html">Sesi 8</a>
+  <a href="bank-soal.html">Bank Soal PCEP</a>
+  <a href="checklist.html">Checklist Progres</a>
+</nav>
+<div class="wrap">
+  <article class="card">
+<h1>Sesi 1 — Halo Python: Program Pertamamu</h1>
+<blockquote>
+<p><strong>Durasi:</strong> 75 menit · <strong>Tools:</strong> Google Colab · <strong>Peserta:</strong> Tazkia &amp; Ardy (pemula)<br />
+<strong>Target PCEP:</strong> Bagian 1 (konsep dasar Python) &amp; Bagian 2 (variabel, tipe data, I/O)</p>
+</blockquote>
+<h2>🎯 Tujuan sesi</h2>
+<p>Di akhir sesi ini, Tazkia &amp; Ardy akan:<br />
+1. Bisa membuka dan menjalankan kode di Google Colab.<br />
+2. Memahami <code>print()</code> untuk menampilkan teks dan <code>input()</code> untuk menerima masukan.<br />
+3. Mengerti <strong>variabel</strong> (variable) serta tipe data <strong>string</strong> dan <strong>integer</strong>.<br />
+4. Pulang membawa <strong>1 program buatan sendiri yang jalan</strong>: sebuah "bot perkenalan".</p>
+<hr />
+<h2>⏱️ Rundown 75 menit</h2>
+<table>
+<thead>
+<tr>
+<th>Waktu</th>
+<th>Bagian</th>
+<th>Aktivitas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 mnt</td>
+<td>Pembuka &amp; setup</td>
+<td>Cerita pemantik + buka Google Colab</td>
+</tr>
+<tr>
+<td>20 mnt</td>
+<td>Konsep + live coding</td>
+<td>Pengajar ngetik, murid ikut</td>
+</tr>
+<tr>
+<td>25 mnt</td>
+<td>Latihan terbimbing</td>
+<td>Murid ngetik sendiri, pengajar dampingi</td>
+</tr>
+<tr>
+<td>15 mnt</td>
+<td>Tantangan</td>
+<td>Bikin "bot perkenalan" (boleh berdua)</td>
+</tr>
+<tr>
+<td>5 mnt</td>
+<td>Wrap-up &amp; PR</td>
+<td>Rangkuman, kosakata, tugas rumah</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>1) Pembuka &amp; Setup (10 menit)</h2>
+<h3>Pemantik (cerita pembuka)</h3>
+<blockquote>
+<p>"Komputer itu super cepat, tapi <em>bodoh</em> — dia cuma melakukan persis apa yang kita<br />
+perintahkan. Hari ini kita belajar bahasa untuk memberi perintah itu: <strong>Python</strong>.<br />
+Dalam 75 menit, kalian akan bikin program yang ngobrol sama kalian."</p>
+</blockquote>
+<p>Kenapa Python? Bahasa paling ramah pemula, dipakai di dunia kerja nyata: web (Instagram),<br />
+data science, AI (ChatGPT dilatih dengan banyak Python), otomasi, dll.</p>
+<h3>Setup Google Colab (lakukan bareng)</h3>
+<ol>
+<li>Buka <strong>https://colab.research.google.com</strong> (login dengan akun Google).</li>
+<li>Klik <strong>File → New notebook</strong>.</li>
+<li>Ketik di sel pertama: <code>print("Halo!")</code></li>
+<li>Tekan <strong>Shift + Enter</strong> untuk menjalankan. Kalau muncul tulisan <code>Halo!</code> di bawah → <strong>berhasil!</strong> 🎉</li>
+</ol>
+<blockquote>
+<p>💡 <em>Catatan pengajar:</em> pastikan keduanya berhasil menjalankan sel pertama sebelum lanjut.<br />
+Inilah momen "kode pertamaku jalan" — rayakan kecil-kecilan, ini yang bikin nagih.</p>
+</blockquote>
+<hr />
+<h2>2) Konsep + Live Coding (20 menit)</h2>
+<p>Pengajar mengetik, murid menyalin &amp; menjalankan tiap baris.</p>
+<h3>a. <code>print()</code> — menampilkan sesuatu</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Halo, dunia!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Belajar Python itu seru&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><code>print</code> artinya "cetak / tampilkan". Teks di dalam tanda kutip disebut <strong>string</strong> (untaian karakter).</p>
+<h3>b. Variabel (variable) — kotak penyimpan</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">nama</span> <span class="o">=</span> <span class="s2">&quot;Tazkia&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">nama</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Halo,&quot;</span><span class="p">,</span> <span class="n">nama</span><span class="p">)</span>
+</code></pre></div>
+
+<p><code>nama</code> adalah <strong>variabel</strong>: nama kotak untuk menyimpan nilai. Tanda <code>=</code> artinya<br />
+"isi kotak ini dengan...", bukan "sama dengan" seperti di matematika.</p>
+<h3>c. <code>input()</code> — menerima masukan dari pengguna</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">nama</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Siapa namamu? &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Senang berkenalan,&quot;</span><span class="p">,</span> <span class="n">nama</span><span class="p">)</span>
+</code></pre></div>
+
+<p><code>input()</code> membuat program <strong>bertanya</strong> dan menunggu pengguna mengetik jawaban.</p>
+<h3>d. Angka &amp; tipe data</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">umur</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Berapa umurmu? &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tahun depan umurmu&quot;</span><span class="p">,</span> <span class="n">umur</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># ❌ ini akan ERROR — kenapa ya?</span>
+</code></pre></div>
+
+<p>Ternyata error! Karena <code>input()</code> selalu menghasilkan <strong>string</strong>, bukan <strong>integer</strong> (angka bulat).<br />
+Komputer bingung "menjumlah" teks. Perbaikannya — ubah dulu jadi angka pakai <code>int()</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">umur</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Berapa umurmu? &quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tahun depan umurmu&quot;</span><span class="p">,</span> <span class="n">umur</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># ✅ sekarang jalan</span>
+</code></pre></div>
+
+<blockquote>
+<p>🔑 <strong>Poin penting:</strong> <code>string</code> = teks, <code>integer</code> = angka bulat. <code>int()</code> mengubah teks<br />
+jadi angka. Ini konsep yang sering keluar di PCEP.</p>
+</blockquote>
+<hr />
+<h2>3) Latihan Terbimbing (25 menit)</h2>
+<p>Murid mengerjakan sendiri di Colab; pengajar berkeliling/mendampingi.</p>
+<p><strong>Latihan 1.</strong> Tampilkan 3 baris: nama lengkapmu, sekolah/kampusmu, dan hobimu.</p>
+<p><strong>Latihan 2.</strong> Buat program yang menanyakan <strong>makanan favorit</strong>, lalu membalas:<br />
+<code>"Wah, &lt;makanan&gt; memang enak!"</code></p>
+<p><strong>Latihan 3.</strong> Buat program yang menanyakan <strong>tahun lahir</strong>, lalu menghitung &amp; menampilkan umur.</p>
+<blockquote>
+<p>Petunjuk: tahun sekarang <code>2026</code>. Ingat <code>int()</code>.</p>
+</blockquote>
+<hr />
+<h2>4) Tantangan: "Bot Perkenalan" (15 menit)</h2>
+<p>Boleh dikerjakan berdua. Buat program yang:<br />
+1. Menanyakan <strong>nama</strong>.<br />
+2. Menanyakan <strong>umur</strong>.<br />
+3. Menanyakan <strong>cita-cita</strong>.<br />
+4. Membalas dengan satu paragraf ramah, contoh:<br />
+<code>"Halo Ardy! Umurmu 16 tahun ya. Semoga cita-citamu jadi game developer tercapai 🚀"</code></p>
+<p>Tantangan bonus (opsional): tambahkan hitungan <strong>"di tahun berapa kamu akan berumur 25"</strong>.</p>
+<hr />
+<h2>5) Wrap-up (5 menit)</h2>
+<h3>Rangkuman</h3>
+<ul>
+<li><code>print()</code> menampilkan, <code>input()</code> bertanya.</li>
+<li><strong>Variabel</strong> menyimpan nilai.</li>
+<li><code>input()</code> menghasilkan <strong>string</strong>; pakai <code>int()</code> untuk mengubahnya jadi angka.</li>
+</ul>
+<h3>🔤 English corner</h3>
+<table>
+<thead>
+<tr>
+<th>Istilah</th>
+<th>Arti</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>print</strong></td>
+<td>menampilkan / mencetak ke layar</td>
+</tr>
+<tr>
+<td><strong>input</strong></td>
+<td>masukan dari pengguna</td>
+</tr>
+<tr>
+<td><strong>variable</strong></td>
+<td>wadah penyimpan nilai</td>
+</tr>
+<tr>
+<td><strong>string</strong></td>
+<td>data berupa teks</td>
+</tr>
+<tr>
+<td><strong>integer</strong></td>
+<td>data berupa angka bulat</td>
+</tr>
+</tbody>
+</table>
+<h3>📌 PR (tugas rumah)</h3>
+<p>Sempurnakan "bot perkenalan"-mu, lalu tambahkan satu pertanyaan baru sesukamu<br />
+(misal: warna favorit) dan balasan yang sesuai. Simpan notebook-nya — minggu depan kita kembangkan.</p>
+<hr />
+<h2>✅ Kunci jawaban (untuk pengajar)</h2>
+<details>
+<summary>Latihan 1</summary>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tazkia Rachim&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computer Science, Universitas Indonesia&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hobi: membaca&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>Latihan 2</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">makanan</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Apa makanan favoritmu? &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wah,&quot;</span><span class="p">,</span> <span class="n">makanan</span><span class="p">,</span> <span class="s2">&quot;memang enak!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>Latihan 3</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">tahun_lahir</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Tahun berapa kamu lahir? &quot;</span><span class="p">))</span>
+<span class="n">umur</span> <span class="o">=</span> <span class="mi">2026</span> <span class="o">-</span> <span class="n">tahun_lahir</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Berarti umurmu sekitar&quot;</span><span class="p">,</span> <span class="n">umur</span><span class="p">,</span> <span class="s2">&quot;tahun.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<details>
+<summary>Tantangan: Bot Perkenalan</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">nama</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Siapa namamu? &quot;</span><span class="p">)</span>
+<span class="n">umur</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Berapa umurmu? &quot;</span><span class="p">))</span>
+<span class="n">cita</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Apa cita-citamu? &quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Halo&quot;</span><span class="p">,</span> <span class="n">nama</span> <span class="o">+</span> <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;Umurmu&quot;</span><span class="p">,</span> <span class="n">umur</span><span class="p">,</span> <span class="s2">&quot;tahun ya.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Semoga cita-citamu jadi&quot;</span><span class="p">,</span> <span class="n">cita</span><span class="p">,</span> <span class="s2">&quot;tercapai 🚀&quot;</span><span class="p">)</span>
+
+<span class="c1"># Bonus</span>
+<span class="n">selisih</span> <span class="o">=</span> <span class="mi">25</span> <span class="o">-</span> <span class="n">umur</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kamu akan berumur 25 tahun di&quot;</span><span class="p">,</span> <span class="mi">2026</span> <span class="o">+</span> <span class="n">selisih</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<hr />
+<h2>🧭 Catatan pengajar</h2>
+<ul>
+<li><strong>Jangan kejar tuntas.</strong> Kalau setup Colab makan waktu, pangkas latihan — yang penting tiap anak pulang dengan 1 program jalan.</li>
+<li><strong>Rayakan error.</strong> Error itu normal &amp; bagian dari belajar. Tunjukkan cara membaca pesan error dengan tenang.</li>
+<li><strong>Beda level Tazkia &amp; Ardy:</strong> kalau Tazkia cepat selesai, beri tantangan bonus; ajak dia bantu jelaskan ke Ardy (mengajar = cara belajar terbaik).</li>
+<li><strong>Sesi depan:</strong> Operator &amp; angka — kita bikin kalkulator sungguhan (PCEP Bagian 2).</li>
+</ul>
+  </article>
+  <div class="prevnext"><a class="disabled" href="#">←</a><a href="sesi-02.html">Sesi 2 — Operator & Kalkulator →</a></div>
+</div>
+</body>
+</html>

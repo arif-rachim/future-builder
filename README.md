@@ -48,3 +48,19 @@ Versi `.ipynb` tiap sesi ada di [`sesi/notebooks/`](sesi/notebooks/). Cara pakai
 
 > Notebook di-generate dari file materi markdown lewat `tools/generate_notebooks.py`
 > (jalankan ulang script ini jika materi diperbarui).
+
+## Versi HTML (untuk dijelaskan di layar)
+Versi HTML yang rapi & siap dibuka di browser ada di folder [`html/`](html/) — **buka
+[`html/index.html`](html/index.html)** sebagai halaman utama. Cocok untuk dipresentasikan:
+ada navigasi antar-sesi, syntax highlighting, dan kunci jawaban yang bisa diklik-buka.
+Semua self-contained (tidak butuh internet saat dibuka).
+
+Regenerasi HTML setelah materi diubah:
+```bash
+pip install markdown pygments
+python3 tools/build_html.py
+```
+
+## Latihan & pemantauan
+- [Bank Soal PCEP](sesi/bank-soal-pcep.md) — 45 soal drill + kunci & pembahasan.
+- [Checklist Progres](progress-checklist.md) — centang materi yang sudah dikuasai Tazkia & Ardy.
