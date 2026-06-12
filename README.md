@@ -39,3 +39,12 @@ pertama langsung ngoding hal nyata, sambil membangun fondasi menuju sertifikasi
 - [Sesi 6 — `dictionary` & mini-proyek data](sesi/sesi-06-dictionary.md)
 - [Sesi 7 — Fungsi (`def`): merapikan kode](sesi/sesi-07-fungsi.md)
 - [Sesi 8 — Error & exceptions + simulasi ujian PCEP](sesi/sesi-08-errors-ujian.md)
+
+## Notebook Colab (siap-pakai)
+Versi `.ipynb` tiap sesi ada di [`sesi/notebooks/`](sesi/notebooks/). Cara pakai:
+1. Buka [Google Colab](https://colab.research.google.com) → **File → Upload notebook** → pilih file `.ipynb` sesi terkait.
+2. Jalankan tiap sel kode dengan **Shift + Enter**.
+3. Sel kosong bertanda `# ✍️ tulis kodemu di sini` adalah tempat berlatih. Kunci jawaban tersembunyi di bagian bawah notebook (klik untuk membuka).
+
+> Notebook di-generate dari file materi markdown lewat `tools/generate_notebooks.py`
+> (jalankan ulang script ini jika materi diperbarui).
